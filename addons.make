@@ -1,0 +1,5 @@
+ofxAudioAnalyzer
+ofxAudioDecoder
+ofxGui
+ofxShadertoy
+ofxSyphon
