@@ -125,8 +125,14 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float colorChangerR = .20853;
     float colorChangerG = .10523;
 
-    colorChangerR *= 1 + rms;
-    colorChangerG *= 1 - rms;
+    colorChangerR *= 1. + fract(rms);
+    if(fract(rms) > 0.5){
+        colorChangerG *= 1. - fract(rms);
+
+    }else{
+        colorChangerG *= 1. + fract(rms);
+
+    }
         
     float my_r = sqrt(x*x + y*y) * 5. * (cos(iTime * colorChangerR) + 1.) * .5; ///
     float r_fac = my_r * 3.1; ///

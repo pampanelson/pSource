@@ -123,7 +123,7 @@ void ofApp::update(){
         if(brightness <= 1.0){
             brightness += rms * 0.1;
         }else if(brightness < 5.0){
-            brightness += rms * 0.2;
+            brightness += rms * 0.5;
         }else{
             brightness = 5.0;
         }
@@ -133,7 +133,7 @@ void ofApp::update(){
         //ifColor = 0;
         brightness = 5.0;
         if(curvature < 180){
-            curvature += rms;
+            curvature += rms * 1.5;
         }else{
             curvature = 180;
         }
@@ -146,15 +146,22 @@ void ofApp::update(){
 
     }
     
-    if(part == 5){
+    if(part == 3){
         brightness = 5.0;
         if(curvature >= 10){
-            curvature -= rms * 1.2;
+            curvature -= rms * 2;
         }else{
             curvature = 10;
         }
     }
 
+    if(part == 4){
+        curvature = 10;
+        if(brightness >= 5.0){
+            brightness -= rms * 0.2;
+        }
+        
+    }
 
     
 //    float brightness_small_step = 0.001;
@@ -198,7 +205,7 @@ void ofApp::draw(){
 //    shadertoy.setUniform1f("colorChangerG", colorChangerR);
 //    shadertoy.setUniform1f("colorChangerB", colorChangerR);
 //    shadertoy.setUniform1i("ifColor", ifColor);
-    shadertoy.setUniform1i("rms", rms * 5.0);
+    shadertoy.setUniform1i("rms", rms * 10000.0);
 
     shadertoy.end();
     shadertoy.draw(0, 0, width, height);
