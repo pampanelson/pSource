@@ -51,6 +51,11 @@ public:
     ofxPanel                         gui;
     ofParameter<float>               rmsThreshold;
     
+    float brightness;
+    float gamma;
+    float ray_brightness;
+    float curvature;
+
     
     ofxAudioAnalyzer                audioAnalyzer;
     ofSoundPlayerExtended           player;

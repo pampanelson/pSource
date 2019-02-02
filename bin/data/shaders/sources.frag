@@ -67,18 +67,23 @@ float fbm( in vec2 p )
   return rz;
 }
 
+uniform float brightness;
+uniform float ray_brightness;// 1 - 8;
+uniform float gamma;// control white brightness 0.1 - 9
+uniform float curvature;// depth of hole 10 - 200;
+
+
 
 // uniform float iTime;
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
 
-    float brightness = 5.;    // 0.001 - 5. use this and next ray_brightness to control global light ....
-    float ray_brightness = 8.; // 1 - 8;
-    float gamma = 6.; // control white brightness 0.1 - 9
+    //float brightness = 5.;    // 0.001 - 5. use this and next ray_brightness to control global light ....
+    // float ray_brightness = 8.; // 1 - 8;
+    // float gamma = 6.; // control white brightness 0.1 - 9
     
-    float curvature = 150.; // depth of hole 10 - 200;
-    
-    ;
+    // float curvature = 150.; // depth of hole 10 - 200;
+
     
 
   float t = -iTime*0.0412;

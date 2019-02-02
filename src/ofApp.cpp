@@ -6,12 +6,12 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     
     ofSetBackgroundColor(0, 0, 0);
-
+    
     shadertoy.load("shaders/sources.frag"); // change file name ========== TODO
     
     width = 1920;
     height = 1080;
-    shadertoy.setDimensions(width, height); // **********change dimension after load shader file ************************ 
+    shadertoy.setDimensions(width, height); // **********change dimension after load shader file ************************
     
     
     //    width = 1280 * 2;
@@ -29,7 +29,7 @@ void ofApp::setup(){
     
     // sound settings
     soundStream.printDeviceList();
-
+    
     ofSoundStreamSettings settings;
     
     // if you want to set the device id to be different than the default
@@ -44,18 +44,18 @@ void ofApp::setup(){
     // settings.api = ofSoundDevice::Api::PULSE;
     
     // or by name
-//    auto devices = soundStream.getMatchingDevices("default");
-//    if(!devices.empty()){
-//        settings.setInDevice(devices[0]);
-//    }
-//
-//    settings.setInListener(this);
-//    settings.sampleRate = 44100;
-//    settings.numOutputChannels = 0;
-//    settings.numInputChannels = 2;
-//    settings.bufferSize = bufferSize;
-//    soundStream.setup(settings);
-//
+    //    auto devices = soundStream.getMatchingDevices("default");
+    //    if(!devices.empty()){
+    //        settings.setInDevice(devices[0]);
+    //    }
+    //
+    //    settings.setInListener(this);
+    //    settings.sampleRate = 44100;
+    //    settings.numOutputChannels = 0;
+    //    settings.numInputChannels = 2;
+    //    settings.bufferSize = bufferSize;
+    //    soundStream.setup(settings);
+    //
     
     int sampleRate = 44100;
     int bufferSize = 512;
@@ -72,18 +72,23 @@ void ofApp::setup(){
     gui.setup();
     
     
+    brightness = 0.001;
+    ray_brightness = 6.0;
+    gamma = 6.0;
+    curvature = 10.0;
+    
 }
 //--------------------------------------------------------------
 void ofApp::exit(){
     soundStream.close();
     audioAnalyzer.exit();
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::audioIn(ofSoundBuffer & input){
     audioAnalyzer.analyze(input);
-
+    
 }
 
 
@@ -102,7 +107,34 @@ void ofApp::update(){
     cout << "RMS : " << rms << endl;
     
     cout << spectrum.at(80) << endl;
+    
+    
 
+    
+    float brightness_small_step = 0.001;
+    float brightness_middle_step = 0.01;
+    float brightness_big_step = 0.1;
+    
+    float curvature_step = 0.05;
+    
+    if (brightness <= 1.0){
+        brightness += brightness_small_step;
+    }else if(brightness > 1.0 && brightness < 2.0){
+        brightness += brightness_middle_step;
+    }else{
+        brightness += brightness_big_step;
+    }
+    
+    
+    if(curvature >= 180){
+        curvature = 180.0;
+    };
+    
+    if(brightness > 5.0){
+        brightness = 5.0;
+        curvature += curvature_step;
+    };
+    
 }
 
 //--------------------------------------------------------------
@@ -113,6 +145,10 @@ void ofApp::draw(){
     ofClear(0,0,0);
     
     shadertoy.begin();
+    shadertoy.setUniform1f("brightness", brightness);
+    shadertoy.setUniform1f("ray_brightness",ray_brightness);
+    shadertoy.setUniform1f("gamma", gamma);
+    shadertoy.setUniform1f("curvature", curvature);
     
     shadertoy.end();
     shadertoy.draw(0, 0, width, height);
@@ -126,55 +162,55 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseDragged(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseEntered(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::mouseExited(int x, int y){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+    
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo){
+    
 }
