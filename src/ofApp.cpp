@@ -6,11 +6,13 @@ void ofApp::setup(){
     ofSetVerticalSync(true);
     
     ofSetBackgroundColor(0, 0, 0);
-    
+
     shadertoy.load("shaders/sources.frag"); // change file name ========== TODO
     
     width = 1920;
     height = 1080;
+    shadertoy.setDimensions(width, height); // **********change dimension after load shader file ************************ 
+    
     
     //    width = 1280 * 2;
     //    height = 720;
@@ -112,8 +114,6 @@ void ofApp::draw(){
     
     shadertoy.begin();
     
-    
-    shadertoy.setUniform1f("color_r",r);
     shadertoy.end();
     shadertoy.draw(0, 0, width, height);
     
