@@ -34,8 +34,7 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
     
-    
-    ofSoundStream soundStream;
+
     
     
     ofShader            shader;
@@ -56,19 +55,30 @@ public:
     float ray_brightness;
     float curvature;
 
-    
+    ofSoundStream soundStream;
+
     ofxAudioAnalyzer                audioAnalyzer;
-    ofSoundPlayerExtended           player;
-    
+//    ofSoundPlayerExtended           player;
+    ofSoundPlayer           player;
+
     int                             sampleRate;
     int                             bufferSize;
-    
     ofSoundBuffer                   soundBuffer;
     
     float                           rms;
+    float                           rmsSum;
     vector<float>                   spectrum;
+
     
+    float                           colorChangerR;
+    float                           colorChangerG;
+    float                           colorChangerB;
+    int                             ifColor = 1;
     
+    int                             startBar = 0;
+    int                             part = 0;
+    static constexpr size_t nBandsToGet = 256;
+    std::array<float, nBandsToGet> fftSmoothed{{0}};
     
     
     

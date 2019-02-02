@@ -72,6 +72,10 @@ uniform float ray_brightness;// 1 - 8;
 uniform float gamma;// control white brightness 0.1 - 9
 uniform float curvature;// depth of hole 10 - 200;
 
+uniform float colorChangerR;
+uniform float colorChangerG;
+uniform float colorChangerB;
+uniform float rms;
 
 
 // uniform float iTime;
@@ -86,7 +90,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
 
     
 
-  float t = -iTime*0.0412;
+  float t = -iTime*0.0312;
   vec2 uv = fragCoord.xy / iResolution.xy-0.5;
   uv.x *= iResolution.x/iResolution.y;
   uv*= curvature*.05+0.0001;
@@ -109,6 +113,7 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     float green = 3.;
     float blue  = .5;
     
+    
     //float red_fact = 1.;
     //float green_fact = 1.;
     //float blue_fact = 1.;
@@ -117,12 +122,17 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
    // green *= green_fact;
    // blue *= blue_fact;
    
-      
-    float my_r = sqrt(x*x + y*y) * 5. * (sin(iTime) + 1.) * .5; ///
-    float r_fac = my_r * 2.1; ///
-    float b_fac = my_r * 0.07; ///
-    vec3 col = val/vec3(red * r_fac,green,blue * b_fac); ///
-    
+    float colorChangerR = .20853;
+    float colorChangerG = .10523;
+
+    colorChangerR *= 1 + rms;
+    colorChangerG *= 1 - rms;
+        
+    float my_r = sqrt(x*x + y*y) * 5. * (cos(iTime * colorChangerR) + 1.) * .5; ///
+    float r_fac = my_r * 3.1; ///
+    float b_fac = my_r * 0.7; ///
+    float g_fac = sqrt(x*x + y*y) * 5. * (cos(iTime * colorChangerG) + 1.) * .2;
+    vec3 col = val/vec3(red * r_fac,green * g_fac,blue * b_fac); ///
     
     
   //vec3 col = val/vec3(red,green,blue);
